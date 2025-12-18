@@ -15,7 +15,7 @@ import numpy as np
 # === Parameters (edit these) ===
 # Process exactly one experiment folder per run.
 # Change this to the experiment you want to process.
-EXPERIMENT_DIR: Path = Path("1217wang2")
+EXPERIMENT_DIR: Path = Path("1218_004wt_2")  # folder containing power subfolders like 100mW, 150mW, ...
 
 # Power folder naming rule: e.g. 100mW, 150mW ...
 POWER_DIR_REGEX: str = r"^(\d+)[mM][wW]$"

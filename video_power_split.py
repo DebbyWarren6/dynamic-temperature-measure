@@ -6,8 +6,8 @@ from pathlib import Path
 from typing import Iterable, List, Sequence, Tuple
 
 # === Parameters (edit to your needs) ===
-INPUT_DIR: Path = Path("1217wang2")  # folder containing the videos
-OUTPUT_ROOT: Path = Path("1217wang2")  # where to place power folders and frames
+INPUT_DIR: Path = Path("1218_004wt_2")  # folder containing the videos
+OUTPUT_ROOT: Path = Path("1218_004wt_2")  # where to place power folders and frames
 VIDEO_EXTENSIONS: Sequence[str] = (".mp4", ".mov", ".mkv")
 START_POWER_MW: int = 100  # first file gets this power
 STEP_POWER_MW: int = 100     # increment per file (in modified-time order)

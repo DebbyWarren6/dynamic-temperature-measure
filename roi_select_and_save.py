@@ -7,7 +7,7 @@ from typing import Iterable, List, Sequence, Tuple
 import cv2
 
 # === Parameters ===
-INPUT_DIR: Path = Path("1217_004wt/100mW/frames")  # folder containing images
+INPUT_DIR: Path = Path("1218_004wt/100mW/frames")  # folder containing images
 ROI_CONFIG: Path = Path("roi_config.json")  # where to save ROI list as JSON
 IMAGE_EXTENSIONS: Sequence[str] = (".jpg", ".jpeg", ".png", ".bmp")
 SORT_BY: str = "mtime"  # or "name"

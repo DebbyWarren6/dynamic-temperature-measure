@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # === Parameters (edit as needed) ===
-BASE_DIR: Path = Path("1217wang2")  # folder containing power subfolders like 100mW, 150mW, ...
+BASE_DIR: Path = Path("1218_004wt_2")  # folder containing power subfolders like 100mW, 150mW, ...
 FRAMES_CSV_NAME: str = "frames.csv"   # csv produced by roi_temperature_ocr.py
 OUTPUT_COMBINED_CSV: Path = BASE_DIR / "combined_temp_vs_time.csv"
 OUTPUT_FIG: Path = BASE_DIR / "temp_vs_time.png"
@@ -28,6 +28,14 @@ MARKER_EVERY: int | None = None  # e.g., 50 to place markers every 50 points; No
 # - If True: use the parent folder name of frames.csv (e.g., "100mW")
 # - If False: use parsed numeric power (e.g., "100 mW")
 LABEL_FROM_PARENT_FOLDER: bool = True
+
+# Time zero alignment (optional)
+# - When enabled: each series' time axis is shifted by TIME_OFFSETS[i]
+# - Units: same as x-axis (seconds if FPS is set, otherwise frame index)
+# - If TIME_OFFSETS shorter than number of series: remaining series use 0 offset
+# - If TIME_OFFSETS longer: extra offsets are ignored
+ALIGN_TIME_ZERO: bool = True
+TIME_OFFSETS: List[float] = [6,6,5,1.8,8.7]
 # ===================================
 
 
@@ -105,7 +113,7 @@ def main() -> None:
 
     plt.figure(figsize=FIG_SIZE)
 
-    for power_mw, folder in power_folders:
+    for series_idx, (power_mw, folder) in enumerate(power_folders):
         csv_path = folder / FRAMES_CSV_NAME
         df = load_and_prepare(
             csv_path,
@@ -117,6 +125,11 @@ def main() -> None:
             DENOISE_WINDOW,
             DENOISE_THRESHOLD,
         )
+
+        offset = 0.0
+        if ALIGN_TIME_ZERO and series_idx < len(TIME_OFFSETS):
+            offset = float(TIME_OFFSETS[series_idx])
+            df["time"] = df["time"] - offset
 
         for _, row in df.iterrows():
             combined_rows.append(
